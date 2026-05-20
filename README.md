@@ -1,4 +1,4 @@
-# my2cents
+# ESP32-C3 Supermini 0.42" OLED Demo
 
 Small Arduino sketch for an ESP32-C3 Supermini driving a 0.42" SSD1306 OLED panel.
 
