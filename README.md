@@ -1,0 +1,91 @@
+# my2cents
+
+Small Arduino sketch for an ESP32-C3 Supermini driving a 0.42" SSD1306 OLED panel.
+
+The sketch lives in [`ESP32C3_042_OLED_Animation/ESP32C3_042_OLED_Animation.ino`](./ESP32C3_042_OLED_Animation/ESP32C3_042_OLED_Animation.ino) and renders a looping demo with:
+
+- scrolling text
+- a lightweight Space Invaders-style scene
+- a Pac-Man chase animation
+- a calibration outline and fill pass for the active display window
+
+## Hardware
+
+- ESP32-C3 board with I2C OLED support
+- 0.42" OLED panel using an SSD1306-compatible controller
+- Tested for the common 128x64 framebuffer layout with a calibrated visible window of 72x40 pixels
+
+The sketch uses these I2C pins:
+
+- SDA: `GPIO 5`
+- SCL: `GPIO 6`
+
+It probes OLED addresses `0x3C` and `0x3D`.
+
+## Dependencies
+
+Install these Arduino libraries:
+
+- `Adafruit GFX Library`
+- `Adafruit SSD1306`
+
+The sketch also uses the ESP32 core for Arduino.
+
+## Build
+
+This repo is organized as a single sketch folder, so the compile target is the sketch directory:
+
+```bash
+arduino-cli compile \
+  --fqbn esp32:esp32:esp32c3:CDCOnBoot=cdc,FlashSize=4M \
+  ESP32C3_042_OLED_Animation
+```
+
+If you are using Arduino IDE instead of `arduino-cli`, open the `.ino` file directly from the sketch folder and compile for an ESP32-C3 target with the same flash and USB settings.
+
+## Upload
+
+```bash
+arduino-cli upload -p COM20 \
+  --fqbn esp32:esp32:esp32c3:CDCOnBoot=cdc,FlashSize=4M \
+  ESP32C3_042_OLED_Animation
+```
+
+Change `COM20` to the serial port used by your board.
+
+## What The Sketch Does
+
+The animation runs in phases:
+
+1. Scrolling banner text
+2. Autoplay Space Invaders-inspired scene
+3. Pac-Man chase from right to left
+4. Pac-Man chase from left to right
+5. Calibration hold
+6. Fill bar sweep across the active OLED window
+
+The display window is calibrated in code with:
+
+- `ACTIVE_X = 28`
+- `ACTIVE_Y = 24`
+- `ACTIVE_W = 72`
+- `ACTIVE_H = 40`
+
+## Tuning
+
+Useful constants are defined near the top of the sketch:
+
+- `CALIBRATION_ONLY_MODE` to show only the display outline
+- `SHOW_CALIBRATION_GUIDE` to overlay the outline on every frame
+- `FRAME_MS` to change the frame rate
+- `ACTIVE_*` values to adjust the visible OLED window
+
+## Troubleshooting
+
+- If the OLED does not initialize, the sketch scans the I2C bus and waits forever after reporting what it found.
+- If the panel appears shifted or clipped, adjust the `ACTIVE_*` calibration values.
+- If uploads fail, confirm the board profile, serial port, and USB CDC settings match the command above.
+
+## License
+
+MIT. See [`LICENSE`](./LICENSE).
