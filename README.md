@@ -1,8 +1,8 @@
 # ESP32-C3 Supermini 0.42" OLED Demo
 
-Small Arduino sketch for an ESP32-C3 Supermini driving a 0.42" SSD1306 OLED panel.
+Arduino demo sketch for an ESP32-C3 Supermini driving a 0.42" SSD1306 OLED panel.
 
-The sketch lives in [`ESP32C3_042_OLED_Animation/ESP32C3_042_OLED_Animation.ino`](./ESP32C3_042_OLED_Animation/ESP32C3_042_OLED_Animation.ino) and renders a looping demo with:
+The sketch renders a looping demo with:
 
 - scrolling text
 - a lightweight Space Invaders-style scene
@@ -28,30 +28,6 @@ Install these Arduino libraries:
 
 - `Adafruit GFX Library`
 - `Adafruit SSD1306`
-
-The sketch also uses the ESP32 core for Arduino.
-
-## Build
-
-This repo is organized as a single sketch folder, so the compile target is the sketch directory:
-
-```bash
-arduino-cli compile \
-  --fqbn esp32:esp32:esp32c3:CDCOnBoot=cdc,FlashSize=4M \
-  ESP32C3_042_OLED_Animation
-```
-
-If you are using Arduino IDE instead of `arduino-cli`, open the `.ino` file directly from the sketch folder and compile for an ESP32-C3 target with the same flash and USB settings.
-
-## Upload
-
-```bash
-arduino-cli upload -p COM20 \
-  --fqbn esp32:esp32:esp32c3:CDCOnBoot=cdc,FlashSize=4M \
-  ESP32C3_042_OLED_Animation
-```
-
-Change `COM20` to the serial port used by your board.
 
 ## What The Sketch Does
 
